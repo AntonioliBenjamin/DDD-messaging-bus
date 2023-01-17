@@ -1,12 +1,15 @@
-import {DomainEvent} from "../../core/entities/DomainEvent";
 import {EventHandler} from "../../core/messages/EventHandler";
+
+export type GetAllOutput = {
+    eventName: string,
+    eventHandler: EventHandler
+}
 
 export class EventHandlerRegistry {
     static registry: Map<string, EventHandler> = new Map();
 
     static register(eventName: string, eventHandler: EventHandler): void {
         this.registry.set(eventName, eventHandler);
-        console.log(this.registry)
         return
     }
 
@@ -14,7 +17,7 @@ export class EventHandlerRegistry {
         return this.registry.get(eventName)
     }
 
-    static getAllEventName() : string[] {
-        return  [...this.registry.keys()]
+    static getAll() : [{ [k: string]: EventHandler; }] {
+        return [Object.fromEntries(this.registry)]
     }
 }
