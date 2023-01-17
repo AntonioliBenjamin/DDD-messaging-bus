@@ -11,6 +11,8 @@
   "author": "CH",
   "license": "ISC",
   "dependencies": {
+    "inversify": "^6.0.1",
+    "reflect-metadata": "^0.1.13",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

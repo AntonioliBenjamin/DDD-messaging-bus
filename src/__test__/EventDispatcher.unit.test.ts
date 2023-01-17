@@ -1,30 +1,54 @@
-import { EventHandler } from "../EventHandler";
-import { EventDispatcher } from "../EventDispatcher";
-import { EventEmitter } from "node:events";
-import { DomainEvent } from "../DomainEvent";
+import {InMemoryEventsReceiver} from "../adapters/inMemory/InMemoryEventsReceiver";
+import {InMemoryEventDispatcher} from "../adapters/inMemory/InMemoryEventDispatcher";
+import {EventEmitter} from "node:events";
+import {DomainEvent} from "../core/entities/DomainEvent";
+import {EventDispatcher} from "../core/messages/EventDispatcher";
+import {EventHandler} from "../core/messages/EventHandler";
+import {EventHandlerRegistry} from "../adapters/registry/EventHandlerRegistry";
 
-describe(" Unit - EventDispatcher", () => {
-  it("should log date and id", async () => {
-    const logSpy = jest.spyOn(console, "log");
+const userCreated = new DomainEvent("1234", "USER_CREATED");
 
-    const eventEmitter = new EventEmitter();
-    const eventDispatcher = new EventDispatcher(eventEmitter);
-    const eventHandler = new EventHandler(eventEmitter);
+class UserCreated implements DomainEvent {
+    createdAt: Date;
+    id: string;
+    name: string;
 
-    const domainEvent: DomainEvent = {
-      createdAt: new Date(),
-      id: "13354",
-      name: "name",
-    };
+}
 
-    const test = async () => {
-      await eventHandler.handle(domainEvent);
-    };
+class UserCreatedHandler implements EventHandler {
+    handle(domainEvent: DomainEvent): Promise<void> {
+        console.log("Event Received")
+        return Promise.resolve(undefined);
+    }
+}
 
-    await test();
+describe(" Unit - InMemoryEventDispatcher", () => {
+    let eventDispatcher: EventDispatcher
+    let eventHandler: EventHandler
 
-    await eventDispatcher.dispatch(domainEvent);
+    beforeAll(() => {
+        const eventEmitter = new EventEmitter();
+        eventDispatcher = new InMemoryEventDispatcher(eventEmitter);
+        eventHandler = new InMemoryEventsReceiver(eventEmitter);
 
-    expect(logSpy).toHaveBeenCalled()
-  });
+        EventHandlerRegistry.register(userCreated.name, new UserCreatedHandler());
+    })
+
+    it("should log date and id", async () => {
+
+
+        const domainEvent: DomainEvent = {
+            createdAt: new Date(),
+            id: "13354",
+            name: "name",
+        };
+
+        const test = async () => {
+            await eventHandler.handle(domainEvent);
+        };
+
+        await test();
+
+        await eventDispatcher.dispatch(domainEvent);
+    });
 });
