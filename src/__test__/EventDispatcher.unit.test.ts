@@ -5,6 +5,7 @@ import {DomainEvent} from "../core/entities/DomainEvent";
 import {EventDispatcher} from "../core/messages/EventDispatcher";
 import {EventHandler} from "../core/messages/EventHandler";
 import {EventHandlerRegistry} from "../adapters/registry/EventHandlerRegistry";
+import { EventReceiver } from "../core/messages/EventReceiver";
 
 const userCreated = new DomainEvent("1234", "USER_CREATED");
 
@@ -15,7 +16,8 @@ class UserCreated implements DomainEvent {
 }
 
 class UserCreatedHandler implements EventHandler {
-    init(domainEvent: DomainEvent): Promise<void> {
+
+    handle(domainEvent: DomainEvent): Promise<void> {
         console.log("Event Received")
         return Promise.resolve(undefined);
     }
@@ -23,10 +25,11 @@ class UserCreatedHandler implements EventHandler {
 
 describe(" Unit - InMemoryEventDispatcher", () => {
     let eventDispatcher: EventDispatcher
-    let eventHandler: EventHandler
+    let eventHandler: EventReceiver
 
     beforeAll(() => {
         const eventEmitter = new EventEmitter();
+
         eventDispatcher = new InMemoryEventDispatcher(eventEmitter);
         eventHandler = new InMemoryEventsReceiver(eventEmitter);
 
@@ -34,7 +37,7 @@ describe(" Unit - InMemoryEventDispatcher", () => {
     })
 
     it("should log date and id", async () => {
-
+        console.log(EventHandlerRegistry.getAllEventName())
 
         const domainEvent: DomainEvent = {
             createdAt: new Date(),
@@ -42,11 +45,7 @@ describe(" Unit - InMemoryEventDispatcher", () => {
             name: "name",
         };
 
-        const test = async () => {
-            await eventHandler.init(domainEvent);
-        };
-
-        await test();
+        await eventHandler.init();
 
         await eventDispatcher.dispatch(domainEvent);
     });
