@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
     /* Language and Environment */
     "target": "ESNext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "types": ["node", "jest"],
@@ -13,5 +12,6 @@
     "outDir": "dist"
   },
     "exclude": ["node_modules", "src/**/*.test.ts", "jest.config.ts"],
-    "include": ["./package.json"]
+    "include": ["./package.json"],
+    "experimentalDecorators": true,
 }
