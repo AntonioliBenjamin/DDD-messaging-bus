@@ -1,5 +1,4 @@
 export class DomainEvent {
-
     createdAt: Date;
     id: string;
     name: string;

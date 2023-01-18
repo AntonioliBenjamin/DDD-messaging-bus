@@ -1,3 +1,4 @@
+import { DomainEvent } from "../../core/entities/DomainEvent";
 import {EventHandler} from "../../core/messages/EventHandler";
 
 export type getAllOutput = {
@@ -8,8 +9,8 @@ export type getAllOutput = {
 export class EventHandlerRegistry {
     static registry: Map<string, EventHandler> = new Map();
 
-    static register(eventName: string, eventHandler: EventHandler): void {
-        this.registry.set(eventName, eventHandler);
+    static register(domainEvent: DomainEvent, eventHandler: EventHandler): void {
+        this.registry.set(domainEvent.name, eventHandler);
         return
     }
 
@@ -19,10 +20,9 @@ export class EventHandlerRegistry {
 
     static getAll() : getAllOutput {
         const values = Object.fromEntries(this.registry)
-        const result = Object.keys(values).map(elm => ({
+        return Object.keys(values).map(elm => ({
             eventName: elm,
             eventHandler: values[elm]
         }))
-        return result
     }
 }
