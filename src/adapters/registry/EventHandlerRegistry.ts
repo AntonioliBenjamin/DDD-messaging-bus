@@ -19,10 +19,9 @@ export class EventHandlerRegistry {
 
     static getAll() : getAllOutput {
         const values = Object.fromEntries(this.registry)
-        const result = Object.keys(values).map(elm => ({
+        return Object.keys(values).map(elm => ({
             eventName: elm,
             eventHandler: values[elm]
         }))
-        return result
     }
 }

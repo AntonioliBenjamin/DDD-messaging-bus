@@ -1,4 +1,4 @@
 export class MessageIdentifiers {
-    static readonly EventHandler = Symbol.for("EventHandler");
+    static readonly EventReceiver = Symbol.for("EventReceiver");
     static readonly EventDispatcher = Symbol.for("EventDispatcher");
 }
