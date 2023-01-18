@@ -1,9 +1,9 @@
 import {EventHandler} from "../../core/messages/EventHandler";
 
-export type GetAllOutput = {
-    eventName: string,
-    eventHandler: EventHandler
-}
+export type getAllOutput = {
+    eventName: string; 
+    eventHandler: EventHandler;
+}[]
 
 export class EventHandlerRegistry {
     static registry: Map<string, EventHandler> = new Map();
@@ -13,11 +13,16 @@ export class EventHandlerRegistry {
         return
     }
 
-    static get(eventName: string) : EventHandler{
+    static get(eventName: string) : EventHandler {
         return this.registry.get(eventName)
     }
 
-    static getAll() : [{ [k: string]: EventHandler; }] {
-        return [Object.fromEntries(this.registry)]
+    static getAll() : getAllOutput {
+        const values = Object.fromEntries(this.registry)
+        const result = Object.keys(values).map(elm => ({
+            eventName: elm,
+            eventHandler: values[elm]
+        }))
+        return result
     }
 }
