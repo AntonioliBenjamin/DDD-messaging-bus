@@ -15,7 +15,7 @@ export class InMemoryEventsReceiver implements EventReceiver {
             const eventHandler = EventHandlerRegistry.get(domainEvent.name)
             return eventHandler.handle(domainEvent);
           }
-        );
+        )
       }
   }
 }
