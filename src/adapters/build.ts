@@ -8,7 +8,7 @@ import amqp from 'amqplib';
 import {RabbitMqEventDispatcher} from "./rabbitMq/RabbitMqEventsDispatcher";
 import {RabbitMqEventsReceiver} from "./rabbitMq/RabbitMqEventsReceiver";
 
-const cloudamqpUrl = 'amqps://xdoesltn:K8V5ZjrCUlIhKwFi6UsyJcEcGZyi8HvT@rattlesnake.rmq.cloudamqp.com/xdoesltn';
+const cloudamqpUrl = ''
 
 export function build(myInMemoryContainer: Container) {
     const eventEmitter = new EventEmitter();
