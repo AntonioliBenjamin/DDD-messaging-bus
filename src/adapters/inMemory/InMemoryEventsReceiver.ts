@@ -1,22 +1,23 @@
-import { EventEmitter } from "node:events";
-import { injectable } from "inversify";
-import { DomainEvent } from "../../core/entities/DomainEvent";
-import { EventHandlerRegistry } from "../registry/EventHandlerRegistry";
-import { EventReceiver } from "../../core/messages/EventReceiver";
+import {EventEmitter} from "node:events";
+import {injectable} from "inversify";
+import {DomainEvent} from "../../core/entities/DomainEvent";
+import {EventHandlerRegistry} from "../registry/EventHandlerRegistry";
+import {EventReceiver} from "../../core/messages/EventReceiver";
 
 @injectable()
 export class InMemoryEventsReceiver implements EventReceiver {
-  constructor(private readonly eventEmitter: EventEmitter) {}
+    constructor(private readonly eventEmitter: EventEmitter) {
+    }
 
-  async init(): Promise<void> {
-    const handlers = EventHandlerRegistry.getAll();
+    async init(): Promise<void> {
+        const eventNames = EventHandlerRegistry.getAllEventNames();
 
-    for (const handler of handlers) {
-        this.eventEmitter.on(handler.eventName, (domainEvent: DomainEvent) => {
-            const eventHandler = EventHandlerRegistry.get(domainEvent.name)
-            return eventHandler.handle(domainEvent);
-          }
-        )
-      }
-  }
+        for (const eventName of eventNames) {
+            this.eventEmitter.on(eventName, (domainEvent: DomainEvent<any>) => {
+                    const eventHandler = EventHandlerRegistry.getEventHandler(eventName);
+                    return eventHandler.handle(domainEvent);
+                }
+            )
+        }
+    }
 }
