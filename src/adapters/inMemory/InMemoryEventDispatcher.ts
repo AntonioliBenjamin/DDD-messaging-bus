@@ -8,7 +8,7 @@ export class InMemoryEventDispatcher implements EventDispatcher {
     constructor(private readonly eventEmitter: EventEmitter
     ) {}
 
-    async dispatch(domainEvent: DomainEvent) {
-        this.eventEmitter.emit(domainEvent.name, domainEvent)
+    async dispatch(domainEvent: DomainEvent<any>) {
+        this.eventEmitter.emit(domainEvent["eventName"], domainEvent)
     }
 }

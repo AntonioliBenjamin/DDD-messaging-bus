@@ -3,7 +3,7 @@ import {EventDispatcher} from "../../core/messages/EventDispatcher";
 import {EventHandler} from "../../core/messages/EventHandler";
 import {EventHandlerRegistry} from "../registry/EventHandlerRegistry";
 import {EventReceiver} from "../../core/messages/EventReceiver";
-import {build} from "../build";
+import { rabbitMqBuild} from "../build";
 import {Container} from "inversify";
 import {MessageIdentifiers} from "../../core/MessageIdentifiers";
 import {UserCreated} from "./UserCreated";
@@ -15,13 +15,17 @@ class UserCreatedHandler implements EventHandler {
     }
 }
 
-describe(" Unit - InMemoryEventDispatcher", () => {
+async function delay(timeMS: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, timeMS));
+}
+jest.setTimeout(1000000)
+describe(" Unit - RabbitMqEventDispatcher", () => {
     let eventDispatcher: EventDispatcher;
     let eventReceiver: EventReceiver;
 
     beforeAll(async () => {
         const container = new Container();
-        build(container);
+        await rabbitMqBuild(container);
         eventDispatcher = container.get(MessageIdentifiers.EventDispatcher);
         eventReceiver = container.get(MessageIdentifiers.EventReceiver);
 
@@ -41,6 +45,7 @@ describe(" Unit - InMemoryEventDispatcher", () => {
         })
 
         await eventDispatcher.dispatch(userCreated);
+        await delay(10000)
 
         expect(logSpy).toHaveBeenCalledTimes(1)
     });

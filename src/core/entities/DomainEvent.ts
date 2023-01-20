@@ -1,12 +1,17 @@
-export class DomainEvent {
+import {v4} from 'uuid'
 
-    createdAt: Date;
-    id: string;
-    name: string;
 
-    constructor(id: string, name: string) {
-        this.id = id;
-        this.name = name;
+
+
+export class DomainEvent<T> {
+    props: T
+    id: string
+    createdAt: Date
+    name: string
+
+    constructor(props: T) {
+        this.props = props;
+        this.id = v4();
         this.createdAt = new Date()
     }
 }

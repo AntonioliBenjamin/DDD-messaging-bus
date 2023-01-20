@@ -1,27 +1,20 @@
 import {EventHandler} from "../../core/messages/EventHandler";
 
-export type getAllOutput = {
-    eventName: string; 
-    eventHandler: EventHandler;
-}[]
+declare type Class<T = any> = new (...args: any[]) => T;
 
 export class EventHandlerRegistry {
     static registry: Map<string, EventHandler> = new Map();
 
-    static register(eventName: string, eventHandler: EventHandler): void {
-        this.registry.set(eventName, eventHandler);
+    static register(domainEvent: Class, eventHandler: EventHandler): void {
+        this.registry.set(domainEvent["name"], eventHandler);
         return
     }
 
-    static get(eventName: string) : EventHandler {
-        return this.registry.get(eventName)
+    static getAllEventNames(): string[] {
+        return [...this.registry.keys()]
     }
 
-    static getAll() : getAllOutput {
-        const values = Object.fromEntries(this.registry)
-        return Object.keys(values).map(elm => ({
-            eventName: elm,
-            eventHandler: values[elm]
-        }))
+    static getEventHandler(eventName: string): EventHandler {
+        return this.registry.get(eventName)
     }
 }
