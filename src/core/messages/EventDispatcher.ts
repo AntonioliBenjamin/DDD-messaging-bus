@@ -1,5 +1,5 @@
 import {DomainEvent} from "../entities/DomainEvent";
 
 export interface EventDispatcher{
-    dispatch(domainEvent : DomainEvent)
+    dispatch(domainEvent : DomainEvent<any>)
 }
