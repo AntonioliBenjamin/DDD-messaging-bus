@@ -1,13 +1,10 @@
 import {v4} from 'uuid'
 
-
-
-
-export class DomainEvent<T> {
+export abstract class DomainEvent<T> {
     props: T
     id: string
     createdAt: Date
-    name: string
+    static eventName: string
 
     constructor(props: T) {
         this.props = props;

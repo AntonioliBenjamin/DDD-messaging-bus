@@ -3,6 +3,8 @@ export function decoratedEvent(value: string) {
     // the returned decorator function
     return function (target) {
         target.eventName = value
+        // console.log(target.name.eventName)
+        // console.log(target)
         // this is the decorator
         // do something with 'target' and 'value'...
     };

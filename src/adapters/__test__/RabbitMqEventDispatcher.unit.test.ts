@@ -10,7 +10,7 @@ import {UserCreated} from "./UserCreated";
 
 class UserCreatedHandler implements EventHandler {
     handle(domainEvent: UserCreated): Promise<void> {
-        console.log("User Created");
+        console.log(domainEvent);
         return Promise.resolve(undefined);
     }
 }
@@ -19,6 +19,7 @@ async function delay(timeMS: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, timeMS));
 }
 jest.setTimeout(1000000)
+
 describe(" Unit - RabbitMqEventDispatcher", () => {
     let eventDispatcher: EventDispatcher;
     let eventReceiver: EventReceiver;
@@ -37,12 +38,11 @@ describe(" Unit - RabbitMqEventDispatcher", () => {
         const logSpy = jest.spyOn(console, "log");
 
         const userCreated = new UserCreated({
-            id : "1234",
             firstName : "John",
             email : "john@example.com",
             lastName : "John",
-            createdAt : new Date()
         })
+        console.log(userCreated)
 
         await eventDispatcher.dispatch(userCreated);
         await delay(10000)
