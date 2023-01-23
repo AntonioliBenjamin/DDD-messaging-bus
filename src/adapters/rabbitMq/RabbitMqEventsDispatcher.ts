@@ -12,14 +12,13 @@ export class RabbitMqEventDispatcher implements EventDispatcher {
     
     async dispatch(domainEvent: DomainEvent<any>) {
         const channel = await this.connection.createChannel();
-        const queue = domainEvent.constructor["eventName"];
+        const queue = domainEvent.constructor.name;
         const exchanger = 'messages_bus';
         const partitionKeyId = v4();
         
         await channel.assertExchange(exchanger, 'direct', {durable: true}).catch(console.error);
         await channel.assertQueue(queue, {durable: true});
-        await channel.bindQueue(queue, exchanger, partitionKeyId); 
-
+        await channel.bindQueue(queue, exchanger, partitionKeyId);
         channel.publish(exchanger, partitionKeyId, Buffer.from(JSON.stringify(domainEvent)));
     }
 }

@@ -4,14 +4,14 @@ import {EventDispatcher} from "../../core/messages/EventDispatcher";
 import {EventHandler} from "../../core/messages/EventHandler";
 import {EventHandlerRegistry} from "../registry/EventHandlerRegistry";
 import {EventReceiver} from "../../core/messages/EventReceiver";
-import { rabbitMqBuild} from "../build";
+import {rabbitMqBuild} from "../build";
 import {Container} from "inversify";
 import {MessageIdentifiers} from "../../core/MessageIdentifiers";
 import {UserCreated} from "./UserCreated";
 
 class UserCreatedHandler implements EventHandler {
     handle(domainEvent: UserCreated): Promise<void> {
-        console.log(domainEvent);
+        console.log("User Created RabbitMQ");
         return Promise.resolve(undefined);
     }
 }
@@ -28,7 +28,8 @@ describe(" Unit - RabbitMqEventDispatcher", () => {
     beforeAll(async () => {
 
         const container = new Container();
-        await rabbitMqBuild(container);
+        const url = process.env.URL
+        await rabbitMqBuild(container,url);
         eventDispatcher = container.get(MessageIdentifiers.EventDispatcher);
         eventReceiver = container.get(MessageIdentifiers.EventReceiver);
 
@@ -46,7 +47,7 @@ describe(" Unit - RabbitMqEventDispatcher", () => {
         })
 
         await eventDispatcher.dispatch(userCreated);
-        await delay(10000)
+        await delay(20000)
 
         expect(logSpy).toHaveBeenCalledTimes(1)
     });
