@@ -4,7 +4,7 @@ import {EventHandlerRegistry} from "../registry/EventHandlerRegistry";
 import * as amqp from 'amqplib';
 
 @injectable()
-export class RabbitMqEventReceiver implements EventReceiver {
+export class RabbitMqEventsReceiver implements EventReceiver {
     constructor(private readonly connection: amqp.Connection) {
     }
 
