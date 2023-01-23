@@ -3,14 +3,21 @@ import {EventDispatcher} from "../../core/messages/EventDispatcher";
 import {EventHandler} from "../../core/messages/EventHandler";
 import {EventHandlerRegistry} from "../registry/EventHandlerRegistry";
 import {EventReceiver} from "../../core/messages/EventReceiver";
-import {build} from "../build";
+import {inMemoryBuild} from "../build";
 import {Container} from "inversify";
 import {MessageIdentifiers} from "../../core/MessageIdentifiers";
 import {UserCreated} from "./UserCreated";
 
 class UserCreatedHandler implements EventHandler {
     handle(domainEvent: UserCreated): Promise<void> {
-        console.log("User Created");
+        console.log("User Created In Memory");
+        return Promise.resolve(undefined);
+    }
+}
+
+class SecondUserCreatedHandler implements EventHandler {
+    handle(domainEvent: UserCreated): Promise<void> {
+        console.log("User Created In Memory two times");
         return Promise.resolve(undefined);
     }
 }
@@ -21,11 +28,12 @@ describe(" Unit - InMemoryEventDispatcher", () => {
 
     beforeAll(async () => {
         const container = new Container();
-        build(container);
+        inMemoryBuild(container);
         eventDispatcher = container.get(MessageIdentifiers.EventDispatcher);
         eventReceiver = container.get(MessageIdentifiers.EventReceiver);
 
         EventHandlerRegistry.register(UserCreated, new UserCreatedHandler());
+        EventHandlerRegistry.register(UserCreated, new SecondUserCreatedHandler());
         await eventReceiver.init();
     });
 
@@ -33,15 +41,13 @@ describe(" Unit - InMemoryEventDispatcher", () => {
         const logSpy = jest.spyOn(console, "log");
 
         const userCreated = new UserCreated({
-            id : "1234",
-            firstName : "John",
-            email : "john@example.com",
-            lastName : "John",
-            createdAt : new Date()
+            firstName: "John",
+            email: "john@example.com",
+            lastName: "John",
         })
 
         await eventDispatcher.dispatch(userCreated);
 
-        expect(logSpy).toHaveBeenCalledTimes(1)
+        expect(logSpy).toHaveBeenCalledTimes(2)
     });
 });

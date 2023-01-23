@@ -8,7 +8,6 @@ export type UserCreatedProperties = {
 }
 
 export class UserCreated extends DomainEvent<UserCreatedProperties> {
-    static eventName = "USER_CREATED";
     
     constructor(props: UserCreatedProperties) {
         super(props)

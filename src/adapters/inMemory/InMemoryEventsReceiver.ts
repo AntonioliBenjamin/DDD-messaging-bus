@@ -11,11 +11,10 @@ export class InMemoryEventsReceiver implements EventReceiver {
 
     async init(): Promise<void> {
         const eventNames = EventHandlerRegistry.getAllEventNames();
-
         for (const eventName of eventNames) {
             this.eventEmitter.on(eventName, (domainEvent: DomainEvent<any>) => {
-                    const eventHandler = EventHandlerRegistry.getEventHandler(eventName);
-                    return eventHandler.handle(domainEvent);
+                    const eventHandlers = EventHandlerRegistry.getEventHandler(eventName);
+                    return eventHandlers.map(elem => elem.handle(domainEvent));
                 }
             )
         }

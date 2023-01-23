@@ -12,9 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "amqplib": "^0.10.3",
+    "dotenv": "^16.0.3",
     "inversify": "^6.0.1",
     "reflect-metadata": "^0.1.13",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "@types/amqplib": "^0.10.1",

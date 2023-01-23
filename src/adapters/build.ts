@@ -6,18 +6,18 @@ import {InMemoryEventsReceiver} from "./inMemory/InMemoryEventsReceiver";
 
 import amqp from 'amqplib';
 import {RabbitMqEventDispatcher} from "./rabbitMq/RabbitMqEventsDispatcher";
-import {RabbitMqEventsReceiver} from "./rabbitMq/RabbitMqEventsReceiver";
+import {RabbitMqEventReceiver} from "./RabbitMq/RabbitMqEventReceiver";
 
-const cloudamqpUrl = ''
 
-export function build(myInMemoryContainer: Container) {
+
+export function inMemoryBuild(myInMemoryContainer: Container) {
     const eventEmitter = new EventEmitter();
     myInMemoryContainer.bind(MessageIdentifiers.EventDispatcher).toConstantValue(new InMemoryEventDispatcher(eventEmitter));
     myInMemoryContainer.bind(MessageIdentifiers.EventReceiver).toConstantValue(new InMemoryEventsReceiver(eventEmitter));
 }
 
-export async function rabbitMqBuild(myRabbitMqContainer: Container) {
-    const connection = await amqp.connect(cloudamqpUrl);
+export async function rabbitMqBuild(myRabbitMqContainer: Container,url : string) {
+    const connection = await amqp.connect(url);
     myRabbitMqContainer.bind(MessageIdentifiers.EventDispatcher).toConstantValue(new RabbitMqEventDispatcher(connection));
-    myRabbitMqContainer.bind(MessageIdentifiers.EventReceiver).toConstantValue(new RabbitMqEventsReceiver(connection));
+    myRabbitMqContainer.bind(MessageIdentifiers.EventReceiver).toConstantValue(new RabbitMqEventReceiver(connection));
 }
