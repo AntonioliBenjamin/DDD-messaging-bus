@@ -8,7 +8,7 @@ import amqp from 'amqplib';
 import {RabbitMqEventDispatcher} from "./rabbitMq/RabbitMqEventsDispatcher";
 import {RabbitMqEventsReceiver} from "./rabbitMq/RabbitMqEventsReceiver";
 
-const cloudamqpUrl = ''
+const url = process.env.URL
 
 export function build(myInMemoryContainer: Container) {
     const eventEmitter = new EventEmitter();
@@ -17,7 +17,7 @@ export function build(myInMemoryContainer: Container) {
 }
 
 export async function rabbitMqBuild(myRabbitMqContainer: Container) {
-    const connection = await amqp.connect(cloudamqpUrl);
+    const connection = await amqp.connect(url);
     myRabbitMqContainer.bind(MessageIdentifiers.EventDispatcher).toConstantValue(new RabbitMqEventDispatcher(connection));
     myRabbitMqContainer.bind(MessageIdentifiers.EventReceiver).toConstantValue(new RabbitMqEventsReceiver(connection));
 }

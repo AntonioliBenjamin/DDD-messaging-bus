@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+require('dotenv').config();
 import {EventDispatcher} from "../../core/messages/EventDispatcher";
 import {EventHandler} from "../../core/messages/EventHandler";
 import {EventHandlerRegistry} from "../registry/EventHandlerRegistry";
@@ -25,6 +26,7 @@ describe(" Unit - RabbitMqEventDispatcher", () => {
     let eventReceiver: EventReceiver;
 
     beforeAll(async () => {
+
         const container = new Container();
         await rabbitMqBuild(container);
         eventDispatcher = container.get(MessageIdentifiers.EventDispatcher);
@@ -38,11 +40,10 @@ describe(" Unit - RabbitMqEventDispatcher", () => {
         const logSpy = jest.spyOn(console, "log");
 
         const userCreated = new UserCreated({
-            firstName : "John",
+            firstName: "John",
             email : "john@example.com",
             lastName : "John",
         })
-        console.log(userCreated)
 
         await eventDispatcher.dispatch(userCreated);
         await delay(10000)

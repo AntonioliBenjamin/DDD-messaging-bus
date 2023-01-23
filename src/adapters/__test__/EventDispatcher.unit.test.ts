@@ -33,11 +33,10 @@ describe(" Unit - InMemoryEventDispatcher", () => {
         const logSpy = jest.spyOn(console, "log");
 
         const userCreated = new UserCreated({
-            id : "1234",
-            firstName : "John",
-            email : "john@example.com",
-            lastName : "John",
-            createdAt : new Date()
+            firstName: "John",
+            email: "john@example.com",
+            lastName: "John",
+
         })
 
         await eventDispatcher.dispatch(userCreated);
