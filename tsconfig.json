@@ -10,9 +10,8 @@
     /* Modules */
     "resolveJsonModule": true,
     "module": "commonjs" /* Specify what module code is generated. */,
-    "rootDir": "./",
     "outDir": "dist"
   },
     "exclude": ["node_modules", "src/**/*.test.ts", "jest.config.ts"],
-    "include": ["./package.json"]
+    "include": ["src"]
 }

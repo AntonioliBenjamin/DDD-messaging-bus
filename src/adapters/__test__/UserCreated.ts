@@ -1,5 +1,4 @@
 import {DomainEvent} from "../../core/entities/DomainEvent";
-import {decoratedEvent} from "../../core/decorators/decoratedEvent";
 
 export type UserCreatedProperties = {
     firstName: string;

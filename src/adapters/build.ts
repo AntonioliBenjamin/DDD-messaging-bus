@@ -5,7 +5,7 @@ import {EventEmitter} from "node:events";
 import {InMemoryEventsReceiver} from "./inMemory/InMemoryEventsReceiver";
 
 import amqp from 'amqplib';
-import {RabbitMqEventDispatcher} from "./rabbitMq/RabbitMqEventsDispatcher";
+import {RabbitMqEventDispatcher} from "../adapters/RabbitMq/RabbitMqEventDispatcher"
 import {RabbitMqEventReceiver} from "./RabbitMq/RabbitMqEventReceiver";
 
 

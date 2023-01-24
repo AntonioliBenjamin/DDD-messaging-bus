@@ -15,6 +15,7 @@ export class EventHandlerRegistry {
             this.registry.set(domainEvent.name, eventAlreadyExist)
             return
         }
+        
         this.registry.set(domainEvent.name, [eventHandler]);
         return
     }

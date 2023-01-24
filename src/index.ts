@@ -1,6 +1,6 @@
 export {EventHandler} from "./core/messages/EventHandler";
 export {InMemoryEventDispatcher} from "./adapters/inMemory/InMemoryEventDispatcher";
-export {RabbitMqEventDispatcher} from "./adapters/RabbitMq/RabbitMqEventsDispatcher";
+export {RabbitMqEventDispatcher} from "./adapters/RabbitMq/RabbitMqEventDispatcher";
 export {EventDispatcher} from "./core/messages/EventDispatcher";
 export {EventReceiver} from "./core/messages/EventReceiver";
 export {InMemoryEventsReceiver} from "./adapters/inMemory/InMemoryEventsReceiver";

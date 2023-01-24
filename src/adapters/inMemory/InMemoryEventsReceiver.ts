@@ -14,7 +14,7 @@ export class InMemoryEventsReceiver implements EventReceiver {
         for (const eventName of eventNames) {
             this.eventEmitter.on(eventName, (domainEvent: DomainEvent<any>) => {
                     const eventHandlers = EventHandlerRegistry.getEventHandler(eventName);
-                    return eventHandlers.map(elem => elem.handle(domainEvent));
+                    return Promise.allSettled(eventHandlers.map(elem => elem.handle(domainEvent)));
                 }
             )
         }
