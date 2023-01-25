@@ -1,8 +1,8 @@
 {
   "name": "ddd-messaging-bus",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "npx ts-node src/index",
     "test": "jest",
@@ -31,5 +31,6 @@
   "publishConfig": {
     "access": "public",
     "directory": "./dist"
-  }
+  },
+  "files": ["dist/**"]
 }
