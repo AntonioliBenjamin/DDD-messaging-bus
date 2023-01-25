@@ -8,3 +8,4 @@ export {RabbitMqEventReceiver} from "./adapters/RabbitMq/RabbitMqEventReceiver";
 export {DomainEvent} from "./core/entities/DomainEvent";
 export {inMemoryBuild, rabbitMqBuild} from "./adapters/build";
 export {EventHandlerRegistry} from "./adapters/registry/EventHandlerRegistry";
+export { MessageIdentifiers } from "./core/MessageIdentifiers";

@@ -13,5 +13,5 @@
     "outDir": "dist"
   },
     "exclude": ["node_modules", "src/**/*.test.ts", "jest.config.ts"],
-    "include": ["src"]
+    "include": ["src/**/*", "package.json"]
 }
