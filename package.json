@@ -1,6 +1,6 @@
 {
   "name": "ddd-messaging-bus",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "publish:minor": "npm version patch && npm run build && npm publish"
   },
   "author": "CH",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "amqplib": "^0.10.3",
     "dotenv": "^16.0.3",
@@ -34,5 +34,8 @@
   },
   "files": [
     "dist/**"
-  ]
+  ],
+  "bundledDependencies": [
+    "npm-package"
+]
 }
