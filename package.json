@@ -1,13 +1,13 @@
 {
   "name": "ddd-messaging-bus",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "npx ts-node src/index",
     "test": "jest",
     "build": "npx rimraf ./dist && npx tsc --declaration",
-    "publish": "npm version patch && npm run build && npm publish"
+    "publish:minor": "npm version patch && npm run build && npm publish"
   },
   "author": "CH",
   "license": "ISC",
