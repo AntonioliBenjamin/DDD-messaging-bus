@@ -113,7 +113,7 @@ export class YourUseCase {
     constructor(@inject(MessageIdentifiers.EventDispatcher) private readonly eventDispatcher: EventDispatcher) 
     {}
     	
-    async execute(): Promise<User> {
+    async execute() {
       const yourDomainEvent = new DomainEvent({
       //Example:
       //userName: "John-Doe",
@@ -125,7 +125,7 @@ export class YourUseCase {
 ```
 
   
-
+**MORE EXAMPLES ON GITHUB**
 
 
 ##  Library dependencies
